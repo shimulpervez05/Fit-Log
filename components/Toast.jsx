@@ -34,7 +34,7 @@ export default function Toast({
         <span
           className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-full ${
             isSuccess
-              ? "bg-[#ccff00]/10 text-[#ccff00]"
+              ? "bg-[#6D5DFB]/10 text-[#6D5DFB]"
               : "bg-blue-500/10 text-blue-400"
           }`}
         >
@@ -45,14 +45,14 @@ export default function Toast({
           )}
         </span>
 
-        <p className="flex-1 text-sm font-semibold text-zinc-200">
+        <p className="flex-1 text-sm font-semibold text-[#17172B]">
           {message}
         </p>
 
         <button
           type="button"
           onClick={onClose}
-          className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg text-zinc-500 transition hover:bg-zinc-800 hover:text-white"
+          className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg text-[#6B6B80] transition hover:bg-[#F0EEFF] hover:text-white"
           aria-label="Close notification"
         >
           <X size={16} />

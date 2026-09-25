@@ -22,7 +22,7 @@ export default function Navbar() {
   };
 
   return (
-    <header className="sticky top-0 z-50 border-b border-zinc-800/80 bg-zinc-950/95 backdrop-blur-md">
+    <header className="sticky top-0 z-50 border-b border-[#E7E5F2]/80 bg-white/95 backdrop-blur-md">
       <div className="container">
         <nav className="flex h-[72px] items-center justify-between gap-6">
           {/* Logo */}
@@ -31,12 +31,12 @@ export default function Navbar() {
             onClick={closeMenu}
             className="flex shrink-0 items-center gap-2"
           >
-            <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-[#ccff00] text-zinc-950">
+            <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-[#6D5DFB] text-white">
               <Dumbbell size={19} strokeWidth={2.5} />
             </span>
 
             <span className="text-lg font-black tracking-tight text-white">
-              FIT<span className="text-[#ccff00]">LOG</span>
+              FIT<span className="text-[#6D5DFB]">LOG</span>
             </span>
           </Link>
 
@@ -46,14 +46,14 @@ export default function Navbar() {
               href="/"
               className={`relative py-2 text-sm font-semibold transition ${
                 isWorkoutActive
-                  ? "text-[#ccff00]"
-                  : "text-zinc-400 hover:text-white"
+                  ? "text-[#6D5DFB]"
+                  : "text-[#55556B] hover:text-white"
               }`}
             >
               Workout
 
               {isWorkoutActive && (
-                <span className="absolute bottom-0 left-0 h-0.5 w-full rounded-full bg-[#ccff00]" />
+                <span className="absolute bottom-0 left-0 h-0.5 w-full rounded-full bg-[#6D5DFB]" />
               )}
             </Link>
 
@@ -61,14 +61,14 @@ export default function Navbar() {
               href="/my-plan"
               className={`relative py-2 text-sm font-semibold transition ${
                 isPlanActive
-                  ? "text-[#ccff00]"
-                  : "text-zinc-400 hover:text-white"
+                  ? "text-[#6D5DFB]"
+                  : "text-[#55556B] hover:text-white"
               }`}
             >
               My Plan
 
               {isPlanActive && (
-                <span className="absolute bottom-0 left-0 h-0.5 w-full rounded-full bg-[#ccff00]" />
+                <span className="absolute bottom-0 left-0 h-0.5 w-full rounded-full bg-[#6D5DFB]" />
               )}
             </Link>
           </div>
@@ -77,22 +77,22 @@ export default function Navbar() {
           <div className="hidden items-center gap-2 sm:flex">
             <Link
               href="/my-plan"
-              className="flex items-center gap-2 rounded-full bg-[#ccff00] px-4 py-2 text-xs font-black uppercase tracking-wide text-zinc-950 transition hover:bg-[#d8ff33]"
+              className="flex items-center gap-2 rounded-full bg-[#6D5DFB] px-4 py-2 text-xs font-black uppercase tracking-wide text-white transition hover:bg-[#5548D9]"
             >
               <span>Plan</span>
 
-              <span className="flex h-5 min-w-5 items-center justify-center rounded-full bg-zinc-950 px-1.5 text-[10px] font-bold text-[#ccff00]">
+              <span className="flex h-5 min-w-5 items-center justify-center rounded-full bg-white px-1.5 text-[10px] font-bold text-[#6D5DFB]">
                 {planCount}
               </span>
             </Link>
 
             <Link
               href="/my-plan"
-              className="flex items-center gap-2 rounded-full border border-zinc-700 px-4 py-2 text-xs font-black uppercase tracking-wide text-zinc-300 transition hover:border-[#ccff00] hover:text-[#ccff00]"
+              className="flex items-center gap-2 rounded-full border border-[#D8D5EC] px-4 py-2 text-xs font-black uppercase tracking-wide text-[#17172B] transition hover:border-[#6D5DFB] hover:text-[#6D5DFB]"
             >
               <span>Saved</span>
 
-              <span className="flex h-5 min-w-5 items-center justify-center rounded-full bg-zinc-800 px-1.5 text-[10px] font-bold text-zinc-300">
+              <span className="flex h-5 min-w-5 items-center justify-center rounded-full bg-[#F0EEFF] px-1.5 text-[10px] font-bold text-[#17172B]">
                 {savedCount}
               </span>
             </Link>
@@ -103,7 +103,7 @@ export default function Navbar() {
             type="button"
             onClick={() => setMenuOpen((current) => !current)}
             aria-label={menuOpen ? "Close menu" : "Open menu"}
-            className="flex h-10 w-10 items-center justify-center rounded-lg border border-zinc-800 text-zinc-300 transition hover:border-[#ccff00] hover:text-[#ccff00] sm:hidden"
+            className="flex h-10 w-10 items-center justify-center rounded-lg border border-[#E7E5F2] text-[#17172B] transition hover:border-[#6D5DFB] hover:text-[#6D5DFB] sm:hidden"
           >
             {menuOpen ? <X size={21} /> : <Menu size={21} />}
           </button>
@@ -111,15 +111,15 @@ export default function Navbar() {
 
         {/* Mobile Menu */}
         {menuOpen && (
-          <div className="border-t border-zinc-800 py-5 sm:hidden">
+          <div className="border-t border-[#E7E5F2] py-5 sm:hidden">
             <div className="flex flex-col gap-2">
               <Link
                 href="/"
                 onClick={closeMenu}
                 className={`rounded-lg px-4 py-3 text-sm font-semibold transition ${
                   isWorkoutActive
-                    ? "bg-[#ccff00]/10 text-[#ccff00]"
-                    : "text-zinc-400 hover:bg-zinc-900 hover:text-white"
+                    ? "bg-[#6D5DFB]/10 text-[#6D5DFB]"
+                    : "text-[#55556B] hover:bg-[#F8F7FF] hover:text-white"
                 }`}
               >
                 Workout
@@ -130,21 +130,21 @@ export default function Navbar() {
                 onClick={closeMenu}
                 className={`rounded-lg px-4 py-3 text-sm font-semibold transition ${
                   isPlanActive
-                    ? "bg-[#ccff00]/10 text-[#ccff00]"
-                    : "text-zinc-400 hover:bg-zinc-900 hover:text-white"
+                    ? "bg-[#6D5DFB]/10 text-[#6D5DFB]"
+                    : "text-[#55556B] hover:bg-[#F8F7FF] hover:text-white"
                 }`}
               >
                 My Plan
               </Link>
 
-              <div className="mt-3 flex gap-2 border-t border-zinc-800 pt-4">
+              <div className="mt-3 flex gap-2 border-t border-[#E7E5F2] pt-4">
                 <Link
                   href="/my-plan"
                   onClick={closeMenu}
-                  className="flex flex-1 items-center justify-center gap-2 rounded-full bg-[#ccff00] px-4 py-2.5 text-xs font-black uppercase tracking-wide text-zinc-950"
+                  className="flex flex-1 items-center justify-center gap-2 rounded-full bg-[#6D5DFB] px-4 py-2.5 text-xs font-black uppercase tracking-wide text-white"
                 >
                   Plan
-                  <span className="flex h-5 min-w-5 items-center justify-center rounded-full bg-zinc-950 px-1.5 text-[10px] text-[#ccff00]">
+                  <span className="flex h-5 min-w-5 items-center justify-center rounded-full bg-white px-1.5 text-[10px] text-[#6D5DFB]">
                     {planCount}
                   </span>
                 </Link>
@@ -152,10 +152,10 @@ export default function Navbar() {
                 <Link
                   href="/my-plan"
                   onClick={closeMenu}
-                  className="flex flex-1 items-center justify-center gap-2 rounded-full border border-zinc-700 px-4 py-2.5 text-xs font-black uppercase tracking-wide text-zinc-300"
+                  className="flex flex-1 items-center justify-center gap-2 rounded-full border border-[#D8D5EC] px-4 py-2.5 text-xs font-black uppercase tracking-wide text-[#17172B]"
                 >
                   Saved
-                  <span className="flex h-5 min-w-5 items-center justify-center rounded-full bg-zinc-800 px-1.5 text-[10px] text-zinc-300">
+                  <span className="flex h-5 min-w-5 items-center justify-center rounded-full bg-[#F0EEFF] px-1.5 text-[10px] text-[#17172B]">
                     {savedCount}
                   </span>
                 </Link>

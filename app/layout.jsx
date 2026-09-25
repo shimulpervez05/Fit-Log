@@ -1,5 +1,5 @@
-```jsx
 import "./globals.css";
+import Footer from "@/components/Footer";
 import { FitLogProvider } from "@/context/FitLogContext";
 
 export const metadata = {
@@ -12,9 +12,11 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body>
-        <FitLogProvider>{children}</FitLogProvider>
+        <FitLogProvider>
+          {children}
+          <Footer />
+        </FitLogProvider>
       </body>
     </html>
   );
 }
-```

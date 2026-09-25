@@ -111,7 +111,7 @@ export default function WorkoutLibrary() {
           {/* Sort */}
           {!loading && !error && workouts.length > 0 && (
             <div className="flex items-center justify-between gap-3 md:justify-end">
-              <span className="text-xs font-semibold uppercase tracking-wider text-zinc-600">
+              <span className="text-xs font-semibold uppercase tracking-wider text-[#6B6B80]">
                 Sort by
               </span>
 
@@ -125,11 +125,11 @@ export default function WorkoutLibrary() {
 
         {/* Loading */}
         {loading && (
-          <div className="flex min-h-[320px] items-center justify-center rounded-2xl border border-zinc-800 bg-zinc-950">
+          <div className="flex min-h-[320px] items-center justify-center rounded-2xl border border-[#E7E5F2] bg-white">
             <div className="flex flex-col items-center gap-4">
               <div className="loading-spinner" />
 
-              <p className="text-sm font-semibold text-zinc-500">
+              <p className="text-sm font-semibold text-[#6B6B80]">
                 Loading workouts…
               </p>
             </div>
@@ -158,13 +158,13 @@ export default function WorkoutLibrary() {
         {!loading &&
           !error &&
           workouts.length === 0 && (
-            <div className="flex min-h-[320px] items-center justify-center rounded-2xl border border-zinc-800 bg-zinc-950 px-6 text-center">
+            <div className="flex min-h-[320px] items-center justify-center rounded-2xl border border-[#E7E5F2] bg-white px-6 text-center">
               <div>
                 <p className="text-lg font-black uppercase text-white">
                   No workouts found
                 </p>
 
-                <p className="mt-2 text-sm text-zinc-500">
+                <p className="mt-2 text-sm text-[#6B6B80]">
                   The workout library is currently empty.
                 </p>
               </div>

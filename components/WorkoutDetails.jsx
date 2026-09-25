@@ -28,12 +28,23 @@ export default function WorkoutDetails({ workout }) {
 
   const [toast, setToast] = useState(null);
 
+  useEffect(() => {
+    if (!toast) return;
+
+    const timer = setTimeout(() => {
+      setToast(null);
+    }, 3000);
+
+    return () => clearTimeout(timer);
+  }, [toast]);
+
   if (!workout) {
     return null;
   }
 
   const {
     id,
+    _id,
     name,
     title,
     image,
@@ -41,6 +52,7 @@ export default function WorkoutDetails({ workout }) {
     description,
     category,
     categories,
+    muscleGroups,
     equipment,
     difficulty,
     sets,
@@ -54,6 +66,8 @@ export default function WorkoutDetails({ workout }) {
     steps,
   } = workout;
 
+  const workoutId = id ?? _id;
+
   const workoutName = name || title || "Untitled Workout";
 
   const workoutImage =
@@ -63,11 +77,13 @@ export default function WorkoutDetails({ workout }) {
 
   const workoutCategories = Array.isArray(categories)
     ? categories
-    : category
-      ? Array.isArray(category)
-        ? category
-        : [category]
-      : [];
+    : Array.isArray(muscleGroups)
+      ? muscleGroups
+      : category
+        ? Array.isArray(category)
+          ? category
+          : [category]
+        : [];
 
   const workoutDuration = duration || durationMinutes || 0;
   const workoutCalories = calories || caloriesBurned || 0;
@@ -85,16 +101,6 @@ export default function WorkoutDetails({ workout }) {
       type,
     });
   };
-
-  useEffect(() => {
-    if (!toast) return;
-
-    const timer = setTimeout(() => {
-      setToast(null);
-    }, 3000);
-
-    return () => clearTimeout(timer);
-  }, [toast]);
 
   const handleAddToPlan = () => {
     const result = addToPlan(workout);
@@ -114,8 +120,8 @@ export default function WorkoutDetails({ workout }) {
     );
   };
 
-  const alreadyInPlan = isInPlan(id);
-  const alreadySaved = isSaved(id);
+  const alreadyInPlan = isInPlan(workoutId);
+  const alreadySaved = isSaved(workoutId);
   const planIsFull = plan.length >= 5;
 
   return (
@@ -125,7 +131,7 @@ export default function WorkoutDetails({ workout }) {
           {/* Back */}
           <Link
             href="/"
-            className="mb-8 inline-flex items-center gap-2 text-sm font-semibold text-zinc-500 transition hover:text-[#ccff00]"
+            className="mb-8 inline-flex items-center gap-2 text-sm font-semibold text-[#6B6B80] transition hover:text-[#6D5DFB]"
           >
             <ArrowLeft size={16} />
             Back to workout library
@@ -134,7 +140,7 @@ export default function WorkoutDetails({ workout }) {
           {/* Main Details */}
           <div className="grid gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:items-start">
             {/* Image */}
-            <div className="overflow-hidden rounded-2xl border border-zinc-800 bg-zinc-900">
+            <div className="overflow-hidden rounded-2xl border border-[#E7E5F2] bg-[#F8F7FF]">
               <div className="aspect-[4/3]">
                 <img
                   src={workoutImage}
@@ -166,13 +172,13 @@ export default function WorkoutDetails({ workout }) {
               </h1>
 
               {/* Description */}
-              <p className="mt-6 text-base leading-7 text-zinc-400">
+              <p className="mt-6 text-base leading-7 text-[#55556B]">
                 {description ||
                   "A focused workout designed to help you train with intent and build consistent strength."}
               </p>
 
               {/* Specs */}
-              <div className="mt-8 grid grid-cols-2 gap-px overflow-hidden rounded-xl border border-zinc-800 bg-zinc-800 sm:grid-cols-3">
+              <div className="mt-8 grid grid-cols-2 gap-px overflow-hidden rounded-xl border border-[#E7E5F2] bg-[#F0EEFF] sm:grid-cols-3">
                 <Spec
                   icon={<Dumbbell size={16} />}
                   label="Equipment"
@@ -215,7 +221,7 @@ export default function WorkoutDetails({ workout }) {
                 <div className="flex items-center gap-1">
                   <Star
                     size={17}
-                    className="fill-[#ccff00] text-[#ccff00]"
+                    className="fill-[#6D5DFB] text-[#6D5DFB]"
                   />
 
                   <span className="text-sm font-black text-white">
@@ -223,7 +229,7 @@ export default function WorkoutDetails({ workout }) {
                   </span>
                 </div>
 
-                <span className="text-xs text-zinc-600">
+                <span className="text-xs text-[#6B6B80]">
                   Workout rating
                 </span>
               </div>
@@ -236,10 +242,10 @@ export default function WorkoutDetails({ workout }) {
                   disabled={alreadyInPlan || planIsFull}
                   className={`flex min-h-12 flex-1 items-center justify-center gap-2 rounded-lg px-5 text-sm font-black transition ${
                     alreadyInPlan
-                      ? "cursor-not-allowed bg-zinc-800 text-zinc-500"
+                      ? "cursor-not-allowed bg-[#F0EEFF] text-[#6B6B80]"
                       : planIsFull
-                        ? "cursor-not-allowed bg-zinc-800 text-zinc-500"
-                        : "bg-[#ccff00] text-zinc-950 hover:bg-[#d8ff33]"
+                        ? "cursor-not-allowed bg-[#F0EEFF] text-[#6B6B80]"
+                        : "bg-[#6D5DFB] text-white hover:bg-[#5548D9]"
                   }`}
                 >
                   <Check size={17} />
@@ -257,8 +263,8 @@ export default function WorkoutDetails({ workout }) {
                   disabled={alreadySaved}
                   className={`flex min-h-12 items-center justify-center gap-2 rounded-lg border px-5 text-sm font-bold transition ${
                     alreadySaved
-                      ? "cursor-not-allowed border-zinc-800 text-zinc-600"
-                      : "border-zinc-700 text-zinc-300 hover:border-[#ccff00] hover:text-[#ccff00]"
+                      ? "cursor-not-allowed border-[#E7E5F2] text-[#6B6B80]"
+                      : "border-[#D8D5EC] text-[#17172B] hover:border-[#6D5DFB] hover:text-[#6D5DFB]"
                   }`}
                 >
                   <Heart
@@ -273,7 +279,7 @@ export default function WorkoutDetails({ workout }) {
           </div>
 
           {/* Instructions */}
-          <section className="mt-16 border-t border-zinc-800 pt-12">
+          <section className="mt-16 border-t border-[#E7E5F2] pt-12">
             <div className="mb-8">
               <p className="section-eyebrow">
                 HOW TO PERFORM
@@ -291,13 +297,13 @@ export default function WorkoutDetails({ workout }) {
                   .map((instruction, index) => (
                     <div
                       key={index}
-                      className="rounded-xl border border-zinc-800 bg-zinc-950 p-6"
+                      className="rounded-xl border border-[#E7E5F2] bg-white p-6"
                     >
-                      <div className="mb-4 flex h-9 w-9 items-center justify-center rounded-full bg-[#ccff00] text-sm font-black text-zinc-950">
+                      <div className="mb-4 flex h-9 w-9 items-center justify-center rounded-full bg-[#6D5DFB] text-sm font-black text-white">
                         {index + 1}
                       </div>
 
-                      <p className="text-sm leading-7 text-zinc-400">
+                      <p className="text-sm leading-7 text-[#55556B]">
                         {typeof instruction === "string"
                           ? instruction
                           : instruction?.step ||
@@ -309,8 +315,8 @@ export default function WorkoutDetails({ workout }) {
                   ))}
               </div>
             ) : (
-              <div className="rounded-xl border border-zinc-800 bg-zinc-950 p-6">
-                <p className="text-sm leading-7 text-zinc-500">
+              <div className="rounded-xl border border-[#E7E5F2] bg-white p-6">
+                <p className="text-sm leading-7 text-[#6B6B80]">
                   Follow controlled movement throughout every repetition.
                   Keep your form consistent and focus on the target muscle
                   group.
@@ -328,14 +334,14 @@ export default function WorkoutDetails({ workout }) {
             className={`toast flex items-center gap-3 ${
               toast.type === "error"
                 ? "border-red-500/30"
-                : "border-[#ccff00]/20"
+                : "border-[#6D5DFB]/20"
             }`}
           >
             <span
               className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-full ${
                 toast.type === "error"
                   ? "bg-red-500/10 text-red-400"
-                  : "bg-[#ccff00]/10 text-[#ccff00]"
+                  : "bg-[#6D5DFB]/10 text-[#6D5DFB]"
               }`}
             >
               {toast.type === "error" ? (
@@ -355,8 +361,8 @@ export default function WorkoutDetails({ workout }) {
 
 function Spec({ icon, label, value }) {
   return (
-    <div className="bg-zinc-950 p-4">
-      <div className="flex items-center gap-2 text-zinc-600">
+    <div className="bg-white p-4">
+      <div className="flex items-center gap-2 text-[#6B6B80]">
         {icon}
 
         <span className="text-[9px] font-bold uppercase tracking-wider">
@@ -364,7 +370,7 @@ function Spec({ icon, label, value }) {
         </span>
       </div>
 
-      <p className="mt-2 truncate text-sm font-bold text-zinc-300">
+      <p className="mt-2 truncate text-sm font-bold text-[#17172B]">
         {value}
       </p>
     </div>

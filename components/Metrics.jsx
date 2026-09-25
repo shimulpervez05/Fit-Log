@@ -36,14 +36,14 @@ export default function Metrics() {
         return (
           <div
             key={metric.label}
-            className="rounded-xl border border-zinc-800 bg-zinc-950 p-5 transition hover:border-zinc-700"
+            className="rounded-xl border border-[#E7E5F2] bg-white p-5 transition hover:border-[#D8D5EC]"
           >
             <div className="flex items-center justify-between">
-              <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-[#ccff00]/10 text-[#ccff00]">
+              <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-[#6D5DFB]/10 text-[#6D5DFB]">
                 <Icon size={17} />
               </div>
 
-              <span className="text-[9px] font-black uppercase tracking-[0.14em] text-zinc-600">
+              <span className="text-[9px] font-black uppercase tracking-[0.14em] text-[#6B6B80]">
                 Today
               </span>
             </div>
@@ -54,13 +54,13 @@ export default function Metrics() {
               </span>
 
               {metric.suffix && (
-                <span className="mb-1 text-xs font-bold text-zinc-600">
+                <span className="mb-1 text-xs font-bold text-[#6B6B80]">
                   {metric.suffix}
                 </span>
               )}
             </div>
 
-            <p className="mt-1 text-xs font-semibold uppercase tracking-wider text-zinc-500">
+            <p className="mt-1 text-xs font-semibold uppercase tracking-wider text-[#6B6B80]">
               {metric.label}
             </p>
           </div>

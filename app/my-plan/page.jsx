@@ -33,7 +33,7 @@ export default function MyPlanPage() {
               <div className="flex flex-col items-center gap-4">
                 <div className="loading-spinner" />
 
-                <p className="text-sm font-semibold text-zinc-500">
+                <p className="text-sm font-semibold text-[#6B6B80]">
                   Loading workouts…
                 </p>
               </div>
@@ -69,15 +69,15 @@ export default function MyPlanPage() {
           <Metrics />
 
           {/* Tabs */}
-          <div className="mt-12 border-b border-zinc-800">
+          <div className="mt-12 border-b border-[#E7E5F2]">
             <div className="flex gap-7">
               <button
                 type="button"
                 onClick={() => setActiveTab("plan")}
                 className={`relative pb-4 text-sm font-black uppercase tracking-wide transition ${
                   activeTab === "plan"
-                    ? "text-[#ccff00]"
-                    : "text-zinc-500 hover:text-white"
+                    ? "text-[#6D5DFB]"
+                    : "text-[#6B6B80] hover:text-white"
                 }`}
               >
                 Today&apos;s Plan
@@ -85,15 +85,15 @@ export default function MyPlanPage() {
                 <span
                   className={`ml-2 rounded-full px-2 py-0.5 text-[10px] ${
                     activeTab === "plan"
-                      ? "bg-[#ccff00]/10 text-[#ccff00]"
-                      : "bg-zinc-900 text-zinc-600"
+                      ? "bg-[#6D5DFB]/10 text-[#6D5DFB]"
+                      : "bg-[#F8F7FF] text-[#6B6B80]"
                   }`}
                 >
                   {plan.length}
                 </span>
 
                 {activeTab === "plan" && (
-                  <span className="absolute bottom-0 left-0 h-0.5 w-full bg-[#ccff00]" />
+                  <span className="absolute bottom-0 left-0 h-0.5 w-full bg-[#6D5DFB]" />
                 )}
               </button>
 
@@ -102,8 +102,8 @@ export default function MyPlanPage() {
                 onClick={() => setActiveTab("saved")}
                 className={`relative pb-4 text-sm font-black uppercase tracking-wide transition ${
                   activeTab === "saved"
-                    ? "text-[#ccff00]"
-                    : "text-zinc-500 hover:text-white"
+                    ? "text-[#6D5DFB]"
+                    : "text-[#6B6B80] hover:text-white"
                 }`}
               >
                 Saved
@@ -111,15 +111,15 @@ export default function MyPlanPage() {
                 <span
                   className={`ml-2 rounded-full px-2 py-0.5 text-[10px] ${
                     activeTab === "saved"
-                      ? "bg-[#ccff00]/10 text-[#ccff00]"
-                      : "bg-zinc-900 text-zinc-600"
+                      ? "bg-[#6D5DFB]/10 text-[#6D5DFB]"
+                      : "bg-[#F8F7FF] text-[#6B6B80]"
                   }`}
                 >
                   {saved.length}
                 </span>
 
                 {activeTab === "saved" && (
-                  <span className="absolute bottom-0 left-0 h-0.5 w-full bg-[#ccff00]" />
+                  <span className="absolute bottom-0 left-0 h-0.5 w-full bg-[#6D5DFB]" />
                 )}
               </button>
             </div>
@@ -148,12 +148,12 @@ export default function MyPlanPage() {
 
           {/* Daily Plan Limit */}
           {activeTab === "plan" && plan.length >= 5 && (
-            <div className="mt-6 rounded-xl border border-[#ccff00]/20 bg-[#ccff00]/5 p-4 text-center">
-              <p className="text-xs font-bold uppercase tracking-wider text-[#ccff00]">
+            <div className="mt-6 rounded-xl border border-[#6D5DFB]/20 bg-[#6D5DFB]/5 p-4 text-center">
+              <p className="text-xs font-bold uppercase tracking-wider text-[#6D5DFB]">
                 Today&apos;s plan is full
               </p>
 
-              <p className="mt-1 text-xs text-zinc-500">
+              <p className="mt-1 text-xs text-[#6B6B80]">
                 Complete or remove a lift before adding another one.
               </p>
             </div>

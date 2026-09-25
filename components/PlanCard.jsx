@@ -1,22 +1,26 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
 import {
   Check,
   Clock3,
   Flame,
   Star,
-  Trash2,
+  X,
   ArrowRight,
   Dumbbell,
 } from "lucide-react";
 
 import { useFitLog } from "@/context/FitLogContext";
+import Toast from "@/components/Toast";
 
 export default function PlanCard({
   workout,
   mode = "plan",
 }) {
+  const [toast, setToast] = useState(null);
+
   const {
     toggleComplete,
     removeFromPlan,
@@ -55,23 +59,31 @@ export default function PlanCard({
   const handleRemove = () => {
     if (isPlan) {
       removeFromPlan(id);
+      setToast("Workout removed from today's plan.");
     } else {
       removeSaved(id);
+      setToast("Workout removed from saved.");
     }
   };
 
   const handleToggleDone = () => {
     toggleComplete(id);
+    setToast(
+      completed
+        ? "Workout marked as active."
+        : "Workout marked as done."
+    );
   };
 
   return (
-    <article
-      className={`group overflow-hidden rounded-xl border bg-zinc-950 transition ${
-        completed
-          ? "border-[#ccff00]/30"
-          : "border-zinc-800 hover:border-zinc-700"
-      }`}
-    >
+    <>
+      <article
+        className={`group overflow-hidden rounded-xl border bg-white transition ${
+          completed
+            ? "border-[#6D5DFB]/30"
+            : "border-[#E7E5F2] hover:border-[#D8D5EC]"
+        }`}
+      >
       <div className="flex flex-col sm:flex-row">
         {/* Thumbnail */}
         <div className="relative h-48 shrink-0 overflow-hidden sm:h-auto sm:w-48">
@@ -85,7 +97,7 @@ export default function PlanCard({
 
           {completed && (
             <div className="absolute inset-0 flex items-center justify-center bg-black/30">
-              <span className="flex h-11 w-11 items-center justify-center rounded-full bg-[#ccff00] text-zinc-950">
+              <span className="flex h-11 w-11 items-center justify-center rounded-full bg-[#6D5DFB] text-white">
                 <Check size={22} strokeWidth={3} />
               </span>
             </div>
@@ -96,21 +108,21 @@ export default function PlanCard({
         <div className="flex min-w-0 flex-1 flex-col p-5">
           <div className="flex items-start justify-between gap-4">
             <div className="min-w-0">
-              <p className="mb-2 text-[10px] font-black uppercase tracking-[0.14em] text-[#ccff00]">
+              <p className="mb-2 text-[10px] font-black uppercase tracking-[0.14em] text-[#6D5DFB]">
                 {completed ? "Completed" : isPlan ? "Today's Plan" : "Saved"}
               </p>
 
               <h3
                 className={`text-xl font-black uppercase leading-tight tracking-tight ${
                   completed
-                    ? "text-zinc-500 line-through"
+                    ? "text-[#6B6B80] line-through"
                     : "text-white"
                 }`}
               >
                 {workoutName}
               </h3>
 
-              <div className="mt-2 flex items-center gap-2 text-xs text-zinc-500">
+              <div className="mt-2 flex items-center gap-2 text-xs text-[#6B6B80]">
                 <Dumbbell size={13} />
                 <span>{equipment || "No equipment specified"}</span>
               </div>
@@ -121,28 +133,28 @@ export default function PlanCard({
               type="button"
               onClick={handleRemove}
               aria-label={`Remove ${workoutName}`}
-              className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-zinc-800 text-zinc-600 transition hover:border-red-500/40 hover:bg-red-500/10 hover:text-red-400"
+              className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-[#E7E5F2] text-[#6B6B80] transition hover:border-red-500/40 hover:bg-red-500/10 hover:text-red-400"
             >
-              <Trash2 size={16} />
+              <X size={18} />
             </button>
           </div>
 
           {/* Stats */}
-          <div className="mt-5 flex flex-wrap items-center gap-4 border-t border-zinc-800 pt-4">
-            <div className="flex items-center gap-1.5 text-xs text-zinc-500">
+          <div className="mt-5 flex flex-wrap items-center gap-4 border-t border-[#E7E5F2] pt-4">
+            <div className="flex items-center gap-1.5 text-xs text-[#6B6B80]">
               <Clock3 size={14} />
               <span>{workoutDuration} min</span>
             </div>
 
-            <div className="flex items-center gap-1.5 text-xs text-zinc-500">
+            <div className="flex items-center gap-1.5 text-xs text-[#6B6B80]">
               <Flame size={14} />
               <span>{workoutCalories} kcal</span>
             </div>
 
-            <div className="flex items-center gap-1.5 text-xs text-zinc-500">
+            <div className="flex items-center gap-1.5 text-xs text-[#6B6B80]">
               <Star
                 size={14}
-                className="fill-[#ccff00] text-[#ccff00]"
+                className="fill-[#6D5DFB] text-[#6D5DFB]"
               />
               <span>{rating || "N/A"}</span>
             </div>
@@ -164,8 +176,8 @@ export default function PlanCard({
                 onClick={handleToggleDone}
                 className={`inline-flex min-h-10 items-center justify-center gap-2 rounded-lg px-4 text-xs font-bold transition ${
                   completed
-                    ? "bg-zinc-800 text-zinc-400"
-                    : "bg-[#ccff00] text-zinc-950 hover:bg-[#d8ff33]"
+                    ? "bg-[#F0EEFF] text-[#55556B]"
+                    : "bg-[#6D5DFB] text-white hover:bg-[#5548D9]"
                 }`}
               >
                 <Check size={15} />
@@ -176,6 +188,12 @@ export default function PlanCard({
           </div>
         </div>
       </div>
-    </article>
+      </article>
+
+      <Toast
+        message={toast}
+        onClose={() => setToast(null)}
+      />
+    </>
   );
 }
