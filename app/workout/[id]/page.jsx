@@ -26,7 +26,7 @@ export default async function WorkoutPage({ params }) {
       notFound();
     }
 
-    return (
+     return(
       <>
         <Navbar />
         <WorkoutDetails workout={workout} />
