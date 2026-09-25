@@ -2,31 +2,21 @@
 
 import { ChevronDown } from "lucide-react";
 
-export default function SortDropdown({
-  value = "duration",
-  onChange,
-}) {
+export default function SortDropdown({ value, onChange }) {
   return (
     <div className="relative">
-      <label htmlFor="workout-sort" className="sr-only">
-        Sort workouts
-      </label>
-
+      <label htmlFor="sort-workouts" className="sr-only">Sort By</label>
       <select
-        id="workout-sort"
+        id="sort-workouts"
         value={value}
         onChange={(event) => onChange(event.target.value)}
-        className="h-11 min-w-[170px] cursor-pointer rounded-lg border border-[#E7E5F2] bg-white px-4 pr-10 text-sm font-semibold text-[#17172B] outline-none transition hover:border-[#D8D5EC] focus:border-[#6D5DFB]"
+        className="focus-ring h-11 min-w-40 appearance-none rounded-lg border border-zinc-800 bg-[#111518] px-4 pr-10 text-sm font-bold text-white"
       >
         <option value="duration">Duration</option>
         <option value="calories">Calories</option>
         <option value="rating">Rating</option>
       </select>
-
-      <ChevronDown
-        size={16}
-        className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-[#6B6B80]"
-      />
+      <ChevronDown className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-zinc-500" size={16} />
     </div>
   );
 }

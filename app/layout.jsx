@@ -1,11 +1,10 @@
 import "./globals.css";
-import Footer from "@/components/Footer";
 import { FitLogProvider } from "@/context/FitLogContext";
+import Footer from "@/components/Footer";
 
 export const metadata = {
   title: "FitLog | Workout Library",
-  description:
-    "FitLog is a dark, no-nonsense workout library and daily workout planner.",
+  description: "A dark, focused workout library and daily plan tracker.",
 };
 
 export default function RootLayout({ children }) {

@@ -2,198 +2,109 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import {
-  Check,
-  Clock3,
-  Flame,
-  Star,
-  X,
-  ArrowRight,
-  Dumbbell,
-} from "lucide-react";
-
+import { ArrowRight, Check, Clock3, Flame, Star, X } from "lucide-react";
 import { useFitLog } from "@/context/FitLogContext";
-import Toast from "@/components/Toast";
 
-export default function PlanCard({
-  workout,
-  mode = "plan",
-}) {
-  const [toast, setToast] = useState(null);
+export default function PlanCard({ workout, mode = "plan" }) {
+  const { toggleComplete, removeFromPlan, removeSaved } = useFitLog();
+  const [toast, setToast] = useState("");
+  const completed = Boolean(workout.completed);
 
-  const {
-    toggleComplete,
-    removeFromPlan,
-    removeSaved,
-  } = useFitLog();
+  function notify(message) {
+    setToast(message);
+    window.setTimeout(() => setToast(""), 2400);
+  }
 
-  if (!workout) return null;
+  function handleDone() {
+    toggleComplete(workout.id);
+    notify(completed ? "Marked as active" : "Workout marked as done");
+  }
 
-  const {
-    id,
-    name,
-    title,
-    image,
-    imageUrl,
-    equipment,
-    duration,
-    durationMinutes,
-    calories,
-    caloriesBurned,
-    rating,
-    completed,
-  } = workout;
-
-  const workoutName = name || title || "Untitled Workout";
-
-  const workoutImage =
-    image ||
-    imageUrl ||
-    "https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?auto=format&fit=crop&w=700&q=80";
-
-  const workoutDuration = duration || durationMinutes || 0;
-  const workoutCalories = calories || caloriesBurned || 0;
-
-  const isPlan = mode === "plan";
-
-  const handleRemove = () => {
-    if (isPlan) {
-      removeFromPlan(id);
-      setToast("Workout removed from today's plan.");
+  function handleRemove() {
+    if (mode === "plan") {
+      removeFromPlan(workout.id);
+      notify("Removed from today's plan");
     } else {
-      removeSaved(id);
-      setToast("Workout removed from saved.");
+      removeSaved(workout.id);
+      notify("Removed from saved");
     }
-  };
-
-  const handleToggleDone = () => {
-    toggleComplete(id);
-    setToast(
-      completed
-        ? "Workout marked as active."
-        : "Workout marked as done."
-    );
-  };
+  }
 
   return (
-    <>
-      <article
-        className={`group overflow-hidden rounded-xl border bg-white transition ${
-          completed
-            ? "border-[#6D5DFB]/30"
-            : "border-[#E7E5F2] hover:border-[#D8D5EC]"
-        }`}
-      >
-      <div className="flex flex-col sm:flex-row">
-        {/* Thumbnail */}
-        <div className="relative h-48 shrink-0 overflow-hidden sm:h-auto sm:w-48">
+    <article className={`relative overflow-hidden rounded-xl border bg-[#111518] p-4 sm:p-5 ${completed ? "border-[#ccff00]/40" : "border-zinc-800"}`}>
+      <div className="flex flex-col gap-5 sm:flex-row sm:items-center">
+        <div className="h-28 w-full shrink-0 overflow-hidden rounded-lg bg-zinc-900 sm:w-36">
           <img
-            src={workoutImage}
-            alt={workoutName}
-            className={`h-full w-full object-cover transition duration-500 group-hover:scale-105 ${
-              completed ? "opacity-50" : ""
-            }`}
+            src={workout.image || workout.imageUrl}
+            alt={workout.name || "Workout"}
+            className="h-full w-full object-cover"
           />
-
-          {completed && (
-            <div className="absolute inset-0 flex items-center justify-center bg-black/30">
-              <span className="flex h-11 w-11 items-center justify-center rounded-full bg-[#6D5DFB] text-white">
-                <Check size={22} strokeWidth={3} />
-              </span>
-            </div>
-          )}
         </div>
 
-        {/* Content */}
-        <div className="flex min-w-0 flex-1 flex-col p-5">
-          <div className="flex items-start justify-between gap-4">
-            <div className="min-w-0">
-              <p className="mb-2 text-[10px] font-black uppercase tracking-[0.14em] text-[#6D5DFB]">
-                {completed ? "Completed" : isPlan ? "Today's Plan" : "Saved"}
-              </p>
-
-              <h3
-                className={`text-xl font-black uppercase leading-tight tracking-tight ${
-                  completed
-                    ? "text-[#6B6B80] line-through"
-                    : "text-white"
-                }`}
-              >
-                {workoutName}
-              </h3>
-
-              <div className="mt-2 flex items-center gap-2 text-xs text-[#6B6B80]">
-                <Dumbbell size={13} />
-                <span>{equipment || "No equipment specified"}</span>
-              </div>
-            </div>
-
-            {/* Remove */}
-            <button
-              type="button"
-              onClick={handleRemove}
-              aria-label={`Remove ${workoutName}`}
-              className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-[#E7E5F2] text-[#6B6B80] transition hover:border-red-500/40 hover:bg-red-500/10 hover:text-red-400"
-            >
-              <X size={18} />
-            </button>
+        <div className="min-w-0 flex-1">
+          <div className="flex flex-wrap gap-2">
+            {(workout.muscleGroups || []).map((tag) => (
+              <span key={tag} className="text-[10px] font-black uppercase tracking-wider text-[#ccff00]">
+                {tag}
+              </span>
+            ))}
           </div>
 
-          {/* Stats */}
-          <div className="mt-5 flex flex-wrap items-center gap-4 border-t border-[#E7E5F2] pt-4">
-            <div className="flex items-center gap-1.5 text-xs text-[#6B6B80]">
-              <Clock3 size={14} />
-              <span>{workoutDuration} min</span>
-            </div>
-
-            <div className="flex items-center gap-1.5 text-xs text-[#6B6B80]">
-              <Flame size={14} />
-              <span>{workoutCalories} kcal</span>
-            </div>
-
-            <div className="flex items-center gap-1.5 text-xs text-[#6B6B80]">
-              <Star
-                size={14}
-                className="fill-[#6D5DFB] text-[#6D5DFB]"
-              />
-              <span>{rating || "N/A"}</span>
-            </div>
-          </div>
-
-          {/* Actions */}
-          <div className="mt-5 flex flex-wrap gap-2">
-            <Link
-              href={`/workout/${id}`}
-              className="btn-outline min-h-10 px-4 text-xs"
-            >
-              View Details
-              <ArrowRight size={14} />
-            </Link>
-
-            {isPlan && (
-              <button
-                type="button"
-                onClick={handleToggleDone}
-                className={`inline-flex min-h-10 items-center justify-center gap-2 rounded-lg px-4 text-xs font-bold transition ${
-                  completed
-                    ? "bg-[#F0EEFF] text-[#55556B]"
-                    : "bg-[#6D5DFB] text-white hover:bg-[#5548D9]"
-                }`}
-              >
-                <Check size={15} />
-
-                {completed ? "Completed" : "Mark as Done"}
-              </button>
+          <div className="mt-2 flex flex-wrap items-center gap-3">
+            <h3 className={`display-font text-2xl font-bold uppercase text-white ${completed ? "line-through opacity-60" : ""}`}>
+              {workout.name || workout.title}
+            </h3>
+            {completed && (
+              <span className="inline-flex items-center gap-1 rounded-full bg-[#ccff00] px-2.5 py-1 text-[10px] font-black uppercase text-black">
+                <Check size={12} /> Done
+              </span>
             )}
           </div>
+
+          <p className="mt-2 text-xs font-semibold text-zinc-500">{workout.equipment || "Bodyweight"}</p>
+
+          <div className="mt-4 flex flex-wrap gap-4 text-xs font-bold text-zinc-400">
+            <span className="inline-flex items-center gap-1.5"><Clock3 size={14} />{workout.duration} min</span>
+            <span className="inline-flex items-center gap-1.5"><Flame size={14} />{workout.caloriesBurned ?? workout.calories} kcal</span>
+            <span className="inline-flex items-center gap-1.5"><Star size={14} />{workout.rating}</span>
+          </div>
+        </div>
+
+        <div className="flex shrink-0 flex-wrap items-center gap-2">
+          <Link
+            href={`/workout/${workout.id}`}
+            className="focus-ring inline-flex items-center gap-1.5 rounded-lg border border-zinc-700 px-3.5 py-2.5 text-[11px] font-black uppercase text-white hover:border-zinc-500"
+          >
+            View Details <ArrowRight size={14} />
+          </Link>
+
+          {mode === "plan" && (
+            <button
+              type="button"
+              onClick={handleDone}
+              className="focus-ring inline-flex items-center gap-1.5 rounded-lg bg-[#ccff00] px-3.5 py-2.5 text-[11px] font-black uppercase text-black hover:bg-[#b7e600]"
+            >
+              <Check size={14} />
+              {completed ? "Done" : "Mark as Done"}
+            </button>
+          )}
+
+          <button
+            type="button"
+            onClick={handleRemove}
+            aria-label="Remove workout"
+            className="focus-ring inline-flex h-10 w-10 items-center justify-center rounded-lg border border-zinc-700 text-zinc-400 hover:border-red-800 hover:text-red-400"
+          >
+            <X size={16} />
+          </button>
         </div>
       </div>
-      </article>
 
-      <Toast
-        message={toast}
-        onClose={() => setToast(null)}
-      />
-    </>
+      {toast && (
+        <div className="toast-stack" aria-live="polite">
+          <div className="toast-item">{toast}</div>
+        </div>
+      )}
+    </article>
   );
 }

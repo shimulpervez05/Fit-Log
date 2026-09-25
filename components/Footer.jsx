@@ -1,27 +1,18 @@
-import Link from "next/link";
 import { Dumbbell } from "lucide-react";
 
 export default function Footer() {
   return (
-    <footer className="border-t border-[#E7E5F2] bg-white">
-      <div className="container flex min-h-[100px] flex-col items-center justify-between gap-5 py-7 sm:flex-row">
-        {/* Logo */}
-        <Link
-          href="/"
-          className="group flex items-center gap-3"
-          aria-label="FitLog home"
-        >
-          <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-[#6D5DFB] text-white transition-transform duration-200 group-hover:scale-105">
-            <Dumbbell size={19} strokeWidth={2.5} />
+    <footer className="border-t border-zinc-800 bg-[#060708]">
+      <div className="container-fit flex flex-col gap-5 py-8 sm:flex-row sm:items-center sm:justify-between">
+        <div className="flex items-center gap-2">
+          <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-[#ccff00] text-black">
+            <Dumbbell size={18} />
           </span>
-
-          <span className="text-lg font-black tracking-tight text-white">
-            FIT<span className="text-[#6D5DFB]">LOG</span>
+          <span className="display-font text-xl font-bold tracking-wide text-white">
+            FIT<span className="text-[#ccff00]">LOG</span>
           </span>
-        </Link>
-
-        {/* Copyright */}
-        <p className="text-center text-xs font-medium text-[#6B6B80] sm:text-right">
+        </div>
+        <p className="text-xs font-medium text-zinc-500">
           © 2026 FitLog — Workout Library. Train hard, log honest.
         </p>
       </div>

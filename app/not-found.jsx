@@ -3,37 +3,21 @@ import { ArrowLeft, Dumbbell } from "lucide-react";
 
 export default function NotFound() {
   return (
-    <main className="flex min-h-screen items-center justify-center bg-white px-6">
-      <div className="w-full max-w-xl text-center">
-        {/* Icon */}
-        <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-2xl bg-[#6D5DFB] text-white shadow-[0_0_40px_rgba(109,93,251,0.12)]">
-          <Dumbbell size={36} strokeWidth={2.2} />
+    <main className="flex min-h-screen items-center justify-center bg-[#090b0d] px-6 text-white">
+      <div className="text-center">
+        <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-[#ccff00] text-black">
+          <Dumbbell size={28} />
         </div>
-
-        {/* 404 */}
-        <p className="mt-8 text-7xl font-black tracking-tighter text-[#6D5DFB] sm:text-8xl">
-          404
+        <p className="text-xs font-black uppercase tracking-[0.2em] text-[#ccff00]">
+          FitLog
         </p>
-
-        <p className="mt-3 text-xs font-black uppercase tracking-[0.25em] text-[#6B6B80]">
-          PAGE NOT FOUND
-        </p>
-
-        <h1 className="mt-4 text-2xl font-black uppercase tracking-tight text-white sm:text-3xl">
-          This workout went missing.
-        </h1>
-
-        <p className="mx-auto mt-4 max-w-md text-sm leading-6 text-[#6B6B80]">
-          The page you&apos;re looking for doesn&apos;t exist or the workout
-          may have been removed.
-        </p>
-
-        {/* Back Home */}
+        <h1 className="display-font mt-3 text-7xl font-bold tracking-tight">404</h1>
+        <p className="mt-3 text-zinc-400">This workout route does not exist.</p>
         <Link
           href="/"
-          className="btn-accent mt-8 inline-flex"
+          className="focus-ring mt-7 inline-flex items-center gap-2 rounded-lg bg-[#ccff00] px-5 py-3 text-sm font-black uppercase text-black transition hover:bg-[#b7e600]"
         >
-          <ArrowLeft size={17} />
+          <ArrowLeft size={16} />
           Back to workouts
         </Link>
       </div>

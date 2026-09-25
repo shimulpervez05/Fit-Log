@@ -1,8 +1,6 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { RefreshCw } from "lucide-react";
-
 import { getWorkouts } from "@/lib/api";
 import WorkoutCard from "@/components/WorkoutCard";
 import SortDropdown from "@/components/SortDropdown";
@@ -13,185 +11,78 @@ export default function WorkoutLibrary() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
-  useEffect(() => {
-    let isMounted = true;
-
-    async function loadWorkouts() {
-      try {
-        setLoading(true);
-        setError("");
-
-        const data = await getWorkouts();
-
-        if (!isMounted) return;
-
-        /*
-         * The API may return either:
-         * - an array directly
-         * - { data: [...] }
-         * - { workouts: [...] }
-         */
-        const workoutList = Array.isArray(data)
-          ? data
-          : Array.isArray(data?.data)
-            ? data.data
-            : Array.isArray(data?.workouts)
-              ? data.workouts
-              : [];
-
-        setWorkouts(workoutList);
-      } catch (err) {
-        console.error("Workout library error:", err);
-
-        if (isMounted) {
-          setError(
-            "We couldn't load the workout library. Please try again."
-          );
-        }
-      } finally {
-        if (isMounted) {
-          setLoading(false);
-        }
-      }
+  async function loadWorkouts() {
+    try {
+      setLoading(true);
+      setError("");
+      const response = await getWorkouts();
+      const data = Array.isArray(response)
+        ? response
+        : response?.data ?? response?.workouts ?? [];
+      setWorkouts(Array.isArray(data) ? data : []);
+    } catch (err) {
+      setError("Could not load workouts. Please try again.");
+    } finally {
+      setLoading(false);
     }
+  }
 
+  useEffect(() => {
     loadWorkouts();
-
-    return () => {
-      isMounted = false;
-    };
   }, []);
 
   const sortedWorkouts = useMemo(() => {
     const list = [...workouts];
-
-    list.sort((a, b) => {
-      if (sortBy === "calories") {
-        return (
-          Number(b.calories || b.caloriesBurned || 0) -
-          Number(a.calories || a.caloriesBurned || 0)
-        );
-      }
-
-      if (sortBy === "rating") {
-        return (
-          Number(b.rating || 0) -
-          Number(a.rating || 0)
-        );
-      }
-
-      return (
-        Number(a.duration || a.durationMinutes || 0) -
-        Number(b.duration || b.durationMinutes || 0)
-      );
-    });
-
-    return list;
+    if (sortBy === "calories") {
+      return list.sort((a, b) => Number(b.caloriesBurned ?? b.calories ?? 0) - Number(a.caloriesBurned ?? a.calories ?? 0));
+    }
+    if (sortBy === "rating") {
+      return list.sort((a, b) => Number(b.rating ?? 0) - Number(a.rating ?? 0));
+    }
+    return list.sort((a, b) => Number(a.duration ?? 0) - Number(b.duration ?? 0));
   }, [workouts, sortBy]);
 
   return (
-    <section id="library" className="section">
-      <div className="container">
-        {/* Section Header */}
-        <div className="mb-10 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
-          <div>
-            <p className="section-eyebrow">
-              WORKOUT LIBRARY
-            </p>
-
-            <h2 className="section-title">
-              THE LIBRARY
-            </h2>
-
-            <p className="section-subtitle">
-              Twelve lifts covering every major muscle group.
-            </p>
-          </div>
-
-          {/* Sort */}
-          {!loading && !error && workouts.length > 0 && (
-            <div className="flex items-center justify-between gap-3 md:justify-end">
-              <span className="text-xs font-semibold uppercase tracking-wider text-[#6B6B80]">
-                Sort by
-              </span>
-
-              <SortDropdown
-                value={sortBy}
-                onChange={setSortBy}
-              />
-            </div>
-          )}
+    <section id="library" className="container-fit section-fit scroll-mt-20">
+      <div className="flex flex-col justify-between gap-6 border-b border-zinc-800 pb-7 sm:flex-row sm:items-end">
+        <div>
+          <p className="eyebrow">THE LIBRARY</p>
+          <h2 className="display-font mt-4 text-4xl font-bold uppercase text-white sm:text-5xl">
+            Twelve lifts covering every major muscle group.
+          </h2>
         </div>
-
-        {/* Loading */}
-        {loading && (
-          <div className="flex min-h-[320px] items-center justify-center rounded-2xl border border-[#E7E5F2] bg-white">
-            <div className="flex flex-col items-center gap-4">
-              <div className="loading-spinner" />
-
-              <p className="text-sm font-semibold text-[#6B6B80]">
-                Loading workouts…
-              </p>
-            </div>
-          </div>
-        )}
-
-        {/* Error */}
-        {!loading && error && (
-          <div className="flex min-h-[320px] flex-col items-center justify-center rounded-2xl border border-red-500/20 bg-red-500/[0.03] px-6 text-center">
-            <p className="text-sm font-bold text-red-400">
-              {error}
-            </p>
-
-            <button
-              type="button"
-              onClick={() => window.location.reload()}
-              className="btn-outline mt-5"
-            >
-              <RefreshCw size={15} />
-              Try Again
-            </button>
-          </div>
-        )}
-
-        {/* Empty State */}
-        {!loading &&
-          !error &&
-          workouts.length === 0 && (
-            <div className="flex min-h-[320px] items-center justify-center rounded-2xl border border-[#E7E5F2] bg-white px-6 text-center">
-              <div>
-                <p className="text-lg font-black uppercase text-white">
-                  No workouts found
-                </p>
-
-                <p className="mt-2 text-sm text-[#6B6B80]">
-                  The workout library is currently empty.
-                </p>
-              </div>
-            </div>
-          )}
-
-        {/* Workout Grid */}
-        {!loading &&
-          !error &&
-          sortedWorkouts.length > 0 && (
-            <div className="workout-grid">
-              {sortedWorkouts.map((workout, index) => (
-                <WorkoutCard
-                  key={
-                    workout.id ??
-                    workout._id ??
-                    `${workout.name || workout.title}-${index}`
-                  }
-                  workout={{
-                    ...workout,
-                    id: workout.id ?? workout._id,
-                  }}
-                />
-              ))}
-            </div>
-          )}
+        <SortDropdown value={sortBy} onChange={setSortBy} />
       </div>
+
+      {loading && (
+        <div className="flex min-h-64 items-center justify-center">
+          <div className="flex items-center gap-3 text-sm font-bold text-zinc-400">
+            <span className="h-5 w-5 animate-spin rounded-full border-2 border-zinc-700 border-t-[#ccff00]" />
+            Loading workouts…
+          </div>
+        </div>
+      )}
+
+      {!loading && error && (
+        <div className="mt-8 rounded-xl border border-red-900/60 bg-red-950/20 p-6 text-sm text-red-300">
+          <p>{error}</p>
+          <button onClick={loadWorkouts} className="mt-4 rounded-lg bg-[#ccff00] px-4 py-2 text-xs font-black uppercase text-black">
+            Try Again
+          </button>
+        </div>
+      )}
+
+      {!loading && !error && sortedWorkouts.length === 0 && (
+        <p className="py-20 text-center text-zinc-500">No workouts found.</p>
+      )}
+
+      {!loading && !error && sortedWorkouts.length > 0 && (
+        <div className="mt-8 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          {sortedWorkouts.map((workout) => (
+            <WorkoutCard key={workout.id ?? workout._id} workout={workout} />
+          ))}
+        </div>
+      )}
     </section>
   );
 }

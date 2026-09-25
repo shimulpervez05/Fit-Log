@@ -3,223 +3,111 @@
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
 
 const FitLogContext = createContext(null);
+const PLAN_KEY = "fitlog-todays-plan";
+const SAVED_KEY = "fitlog-saved-workouts";
 
-const PLAN_STORAGE_KEY = "fitlog-todays-plan";
-const SAVED_STORAGE_KEY = "fitlog-saved-workouts";
+function normalize(workout) {
+  return {
+    ...workout,
+    id: workout.id ?? workout._id,
+    caloriesBurned: workout.caloriesBurned ?? workout.calories ?? 0,
+    duration: workout.duration ?? workout.durationMinutes ?? 0,
+    completed: Boolean(workout.completed),
+  };
+}
 
 export function FitLogProvider({ children }) {
   const [plan, setPlan] = useState([]);
   const [saved, setSaved] = useState([]);
   const [hydrated, setHydrated] = useState(false);
 
-  // Load saved data from localStorage
   useEffect(() => {
     try {
-      const storedPlan = localStorage.getItem(PLAN_STORAGE_KEY);
-      const storedSaved = localStorage.getItem(SAVED_STORAGE_KEY);
-
-      if (storedPlan) {
-        setPlan(JSON.parse(storedPlan));
-      }
-
-      if (storedSaved) {
-        setSaved(JSON.parse(storedSaved));
-      }
-    } catch (error) {
-      console.error("Failed to load FitLog data:", error);
+      const storedPlan = JSON.parse(localStorage.getItem(PLAN_KEY) || "[]");
+      const storedSaved = JSON.parse(localStorage.getItem(SAVED_KEY) || "[]");
+      setPlan(Array.isArray(storedPlan) ? storedPlan : []);
+      setSaved(Array.isArray(storedSaved) ? storedSaved : []);
+    } catch {
+      setPlan([]);
+      setSaved([]);
     } finally {
       setHydrated(true);
     }
   }, []);
 
-  // Save today's plan
   useEffect(() => {
-    if (!hydrated) return;
-
-    localStorage.setItem(PLAN_STORAGE_KEY, JSON.stringify(plan));
+    if (hydrated) localStorage.setItem(PLAN_KEY, JSON.stringify(plan));
   }, [plan, hydrated]);
 
-  // Save saved workouts
   useEffect(() => {
-    if (!hydrated) return;
-
-    localStorage.setItem(SAVED_STORAGE_KEY, JSON.stringify(saved));
+    if (hydrated) localStorage.setItem(SAVED_KEY, JSON.stringify(saved));
   }, [saved, hydrated]);
 
-  // Add workout to today's plan
-  const addToPlan = (workout) => {
-    if (!workout) {
-      return {
-        success: false,
-        message: "Workout not found.",
-      };
+  function addToPlan(workout) {
+    const item = normalize(workout);
+    if (plan.some((entry) => entry.id === item.id)) {
+      return { ok: false, message: "Already in today's plan" };
     }
-
     if (plan.length >= 5) {
-      return {
-        success: false,
-        message: "Today's plan is full. You can add up to five lifts.",
-      };
+      return { ok: false, message: "Today's plan is full" };
     }
+    setPlan((current) => [...current, item]);
+    return { ok: true, message: "Added to today's plan" };
+  }
 
-    const alreadyExists = plan.some(
-      (item) => String(item.id) === String(workout.id)
-    );
+  function removeFromPlan(id) {
+    setPlan((current) => current.filter((item) => item.id !== id));
+  }
 
-    if (alreadyExists) {
-      return {
-        success: false,
-        message: "This workout is already in today's plan.",
-      };
-    }
-
-    setPlan((currentPlan) => [
-      ...currentPlan,
-      {
-        ...workout,
-        completed: false,
-      },
-    ]);
-
-    return {
-      success: true,
-      message: "Added to today's plan.",
-    };
-  };
-
-  // Remove workout from today's plan
-  const removeFromPlan = (workoutId) => {
-    setPlan((currentPlan) =>
-      currentPlan.filter(
-        (item) => String(item.id) !== String(workoutId)
+  function toggleComplete(id) {
+    setPlan((current) =>
+      current.map((item) =>
+        item.id === id ? { ...item, completed: !item.completed } : item
       )
     );
-  };
+  }
 
-  // Mark workout as completed / not completed
-  const toggleComplete = (workoutId) => {
-    setPlan((currentPlan) =>
-      currentPlan.map((item) =>
-        String(item.id) === String(workoutId)
-          ? {
-              ...item,
-              completed: !item.completed,
-            }
-          : item
-      )
-    );
-  };
-
-  // Save workout for later
-  const saveWorkout = (workout) => {
-    if (!workout) {
-      return {
-        success: false,
-        message: "Workout not found.",
-      };
+  function saveWorkout(workout) {
+    const item = normalize(workout);
+    if (saved.some((entry) => entry.id === item.id)) {
+      return { ok: false, message: "Already saved for later" };
     }
+    setSaved((current) => [...current, item]);
+    return { ok: true, message: "Saved for later" };
+  }
 
-    const alreadySaved = saved.some(
-      (item) => String(item.id) === String(workout.id)
-    );
+  function removeSaved(id) {
+    setSaved((current) => current.filter((item) => item.id !== id));
+  }
 
-    if (alreadySaved) {
-      return {
-        success: false,
-        message: "This workout is already saved.",
-      };
-    }
-
-    setSaved((currentSaved) => [...currentSaved, workout]);
-
-    return {
-      success: true,
-      message: "Saved for later.",
-    };
-  };
-
-  // Remove workout from saved list
-  const removeSaved = (workoutId) => {
-    setSaved((currentSaved) =>
-      currentSaved.filter(
-        (item) => String(item.id) !== String(workoutId)
-      )
-    );
-  };
-
-  // Check whether workout is already in today's plan
-  const isInPlan = (workoutId) => {
-    return plan.some(
-      (item) => String(item.id) === String(workoutId)
-    );
-  };
-
-  // Check whether workout is already saved
-  const isSaved = (workoutId) => {
-    return saved.some(
-      (item) => String(item.id) === String(workoutId)
-    );
-  };
-
-  // Plan metrics
-  const planMetrics = useMemo(() => {
-    const exercises = plan.length;
-
-    const minutes = plan.reduce(
-      (total, workout) =>
-        total + Number(workout.duration || workout.durationMinutes || 0),
-      0
-    );
-
-    const calories = plan.reduce(
-      (total, workout) =>
-        total + Number(workout.calories || workout.caloriesBurned || 0),
-      0
-    );
-
-    return {
-      exercises,
-      minutes,
-      calories,
-    };
-  }, [plan]);
+  const planMetrics = useMemo(
+    () => ({
+      exercises: plan.length,
+      minutes: plan.reduce((sum, item) => sum + Number(item.duration || 0), 0),
+      calories: plan.reduce((sum, item) => sum + Number(item.caloriesBurned || 0), 0),
+    }),
+    [plan]
+  );
 
   const value = {
     plan,
     saved,
     hydrated,
-
-    planCount: plan.length,
-    savedCount: saved.length,
-
     planMetrics,
-
     addToPlan,
     removeFromPlan,
     toggleComplete,
-
     saveWorkout,
     removeSaved,
-
-    isInPlan,
-    isSaved,
+    isInPlan: (id) => plan.some((item) => item.id === id),
+    isSaved: (id) => saved.some((item) => item.id === id),
   };
 
-  return (
-    <FitLogContext.Provider value={value}>
-      {children}
-    </FitLogContext.Provider>
-  );
+  return <FitLogContext.Provider value={value}>{children}</FitLogContext.Provider>;
 }
 
 export function useFitLog() {
   const context = useContext(FitLogContext);
-
-  if (!context) {
-    throw new Error(
-      "useFitLog must be used inside a FitLogProvider"
-    );
-  }
-
+  if (!context) throw new Error("useFitLog must be used inside FitLogProvider");
   return context;
 }

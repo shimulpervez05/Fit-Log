@@ -1,102 +1,64 @@
-# FitLog — Workout Library
+# 💪 FitLog
 
-FitLog is a responsive dark-themed workout library and daily workout planner built with Next.js. Users can browse workouts, view detailed exercise information, add exercises to today's plan, save workouts for later, and track completed exercises.
-
-## Live Project
-
-Add your deployed URL here:
-
-https://your-fitlog-url.vercel.app
-
-## Features
-
-- Browse all available workouts from the FitLog API
-- Responsive workout library for mobile, tablet, and desktop
-- View detailed workout information
-- Add up to five workouts to Today's Plan
-- Save workouts for later
-- Mark planned workouts as completed
-- Remove workouts from Today's Plan or Saved
-- Live Exercises, Minutes, and Calories metrics
-- Sort workouts by Duration, Calories, or Rating
-- Toast notifications for important actions
-- Loading states while data is being fetched
-- Custom 404 page for unknown routes
-- LocalStorage persistence for Today's Plan and Saved workouts
-- Responsive mobile navigation
-- Dark gym-focused UI with neon accent styling
+FitLog is a responsive workout library and daily workout planner built for the B14-A6-Fit Log assignment. Users can browse workouts from the provided API, inspect workout details, add lifts to today's plan, save workouts for later, and track their daily metrics.
 
 ## Technologies
 
-- Next.js
-- React
-- App Router
-- Tailwind CSS
+- Next.js 15
+- React 19
+- Next.js App Router
+- Tailwind CSS 4
 - Lucide React
 - Context API
-- JavaScript
 - LocalStorage
 - REST API
 
+## Key Features
+
+1. Responsive mobile, tablet, and desktop UI.
+2. Workout library populated from the FitLog API.
+3. Workout detail pages with specs and instructions.
+4. Today's Plan with a maximum of five workouts.
+5. Saved workouts with live navbar counters.
+6. Add, save, mark as done, and remove workout actions with toast feedback.
+7. Sort workouts by Duration, Calories, or Rating.
+8. LocalStorage persistence for plan and saved workouts.
+9. Loading state and custom 404 page.
+10. Responsive navigation and footer.
+
 ## API
 
-All workout data is loaded from:
-
-https://api.abcz.workers.dev/api/fitlog
+All workouts:
+`https://api.abcz.workers.dev/api/fitlog`
 
 Single workout:
+`https://api.abcz.workers.dev/api/fitlog/:id`
 
-https://api.abcz.workers.dev/api/fitlog/:id
+## Run Locally
 
-## Main Routes
+```bash
+npm install
+npm run dev
+```
 
-| Route | Description |
-| --- | --- |
-| `/` | Workout library and home page |
-| `/workout/:id` | Workout details page |
-| `/my-plan` | Today's Plan and Saved workouts |
+Open `http://localhost:3000`.
 
-## Project Structure
+## Production Build
 
-```text
-fitlog/
-├── app/
-│   ├── workout/
-│   │   └── [id]/
-│   │       └── page.jsx
-│   │
-│   ├── my-plan/
-│   │   └── page.jsx
-│   │
-│   ├── globals.css
-│   ├── layout.jsx
-│   ├── loading.jsx
-│   ├── not-found.jsx
-│   └── page.jsx
-│
-├── components/
-│   ├── Navbar.jsx
-│   ├── Hero.jsx
-│   ├── WorkoutLibrary.jsx
-│   ├── WorkoutCard.jsx
-│   ├── WorkoutDetails.jsx
-│   ├── PlanCard.jsx
-│   ├── Metrics.jsx
-│   ├── SortDropdown.jsx
-│   ├── EmptyState.jsx
-│   ├── Toast.jsx
-│   └── Footer.jsx
-│
-├── context/
-│   └── FitLogContext.jsx
-│
-├── lib/
-│   └── api.js
-│
-├── public/
-│   └── images/
-│
-├── README.md
-├── package.json
-├── postcss.config.mjs
-└── jsconfig.json
+```bash
+npm run build
+npm start
+```
+
+## Git Commit Requirement
+
+For the assignment, keep at least 8 meaningful commits, for example:
+
+- `create Next.js project structure`
+- `build responsive navbar`
+- `add hero and workout library`
+- `add workout details page`
+- `add plan and saved context`
+- `build my plan page`
+- `add sorting and toast actions`
+- `finish responsive styling and README`
