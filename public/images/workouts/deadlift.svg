@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 375">
+<defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#111417"/><stop offset="1" stop-color="#20262a"/></linearGradient></defs>
+<rect width="500" height="375" fill="url(#g)"/>
+<circle cx="430" cy="55" r="90" fill="#b8ff00" opacity=".08"/><circle cx="65" cy="330" r="110" fill="#b8ff00" opacity=".05"/>
+<text x="28" y="42" fill="#b8ff00" font-family="Arial,sans-serif" font-size="16" font-weight="800" letter-spacing="2">FITLOG / 03</text>
+<rect x="75" y="315" width="350" height="9" rx="4" fill="#e7ecef"/><circle cx="105" cy="319" r="34" fill="#252a2e" stroke="#b8ff00" stroke-width="7"/><circle cx="395" cy="319" r="34" fill="#252a2e" stroke="#b8ff00" stroke-width="7"/><circle cx="250" cy="125" r="34" fill="#d9dde0"/><path d="M250 160 L205 220 L175 290 M250 160 L310 225 L335 290" stroke="#d9dde0" stroke-width="25" stroke-linecap="round" fill="none"/><path d="M175 290 L335 290" stroke="#e7ecef" stroke-width="12"/><path d="M205 220 L250 250 L310 225" stroke="#d9dde0" stroke-width="24" fill="none" stroke-linecap="round"/>
+<rect x="28" y="342" width="444" height="1" fill="#3a4045"/><text x="28" y="365" fill="#eef2f4" font-family="Arial,sans-serif" font-size="18" font-weight="900" letter-spacing="1">DEADLIFT</text>
+</svg>

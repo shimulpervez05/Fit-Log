@@ -3,12 +3,26 @@
 import Link from "next/link";
 import { Clock3, Flame, Star, Dumbbell, ArrowUpRight } from "lucide-react";
 
-const FALLBACK_IMAGE =
-  "https://img.magnific.com/free-photo/portrait-anime-character-doing-fitness-exercising_23-2151666664.jpg?w=740";
+const LOCAL_WORKOUT_IMAGES = {
+  "1": "/images/workouts/bench.svg",
+  "2": "/images/workouts/squat.svg",
+  "3": "/images/workouts/deadlift.svg",
+  "4": "/images/workouts/pullup.svg",
+  "5": "/images/workouts/press.svg",
+  "6": "/images/workouts/row.svg",
+  "7": "/images/workouts/rdl.svg",
+  "8": "/images/workouts/lunge.svg",
+  "9": "/images/workouts/curl.svg",
+  "10": "/images/workouts/pushdown.svg",
+  "11": "/images/workouts/lateral.svg",
+  "12": "/images/workouts/plank.svg",
+};
+
+const FALLBACK_IMAGE = "/images/workouts/bench.svg";
 
 export default function WorkoutCard({ workout }) {
-  const id = workout?.id ?? workout?._id;
-  const image = workout?.image || workout?.imageUrl || FALLBACK_IMAGE;
+  const id = String(workout?.id ?? workout?._id ?? "");
+  const image = LOCAL_WORKOUT_IMAGES[id] || workout?.image || workout?.imageUrl || FALLBACK_IMAGE;
   const tags = workout?.muscleGroups ?? workout?.categories ?? workout?.category ?? [];
   const categories = Array.isArray(tags) ? tags : [tags].filter(Boolean);
   const duration = workout?.duration ?? workout?.durationMinutes ?? 0;
