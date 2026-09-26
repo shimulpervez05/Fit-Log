@@ -19,7 +19,7 @@ export default function WorkoutLibrary() {
       const data = Array.isArray(response)
         ? response
         : response?.data ?? response?.workouts ?? [];
-      setWorkouts(Array.isArray(data) ? data : []);
+      setWorkouts(Array.isArray(data) && data.length > 0 ? data : []);
     } catch (err) {
       setError("Could not load workouts. Please try again.");
     } finally {

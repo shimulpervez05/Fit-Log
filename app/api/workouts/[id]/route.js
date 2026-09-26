@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { getFallbackWorkout } from "@/lib/fallback-workouts";
 
 const API_URL = "https://api.abcz.workers.dev/api/fitlog";
 
@@ -15,46 +16,26 @@ export async function GET(_request, { params }) {
   try {
     const response = await fetch(`${API_URL}/${encodeURIComponent(id)}`, {
       cache: "no-store",
-      headers: {
-        Accept: "application/json",
-      },
+      headers: { Accept: "application/json" },
     });
 
-    const text = await response.text();
+    if (!response.ok) throw new Error(`Upstream status ${response.status}`);
 
-    if (!response.ok) {
-      return NextResponse.json(
-        {
-          error: "Upstream workout API failed",
-          status: response.status,
-          details: text.slice(0, 500),
-        },
-        { status: response.status === 404 ? 404 : 502 }
-      );
-    }
-
-    let data;
-    try {
-      data = JSON.parse(text);
-    } catch {
-      return NextResponse.json(
-        { error: "Workout API returned invalid JSON" },
-        { status: 502 }
-      );
-    }
-
-    return NextResponse.json(data, {
-      status: 200,
-      headers: {
-        "Cache-Control": "no-store, max-age=0",
-      },
-    });
+    const data = await response.json();
+    return NextResponse.json(data, { headers: { "Cache-Control": "no-store" } });
   } catch (error) {
-    console.error("Workout detail proxy error:", error);
+    const fallback = getFallbackWorkout(id);
+    if (fallback) {
+      console.error(`Workout ${id} unavailable upstream; using local fallback.`);
+      return NextResponse.json(fallback, {
+        status: 200,
+        headers: {
+          "Cache-Control": "no-store, max-age=0",
+          "X-FitLog-Data-Source": "fallback",
+        },
+      });
+    }
 
-    return NextResponse.json(
-      { error: "Could not connect to workout API" },
-      { status: 502 }
-    );
+    return NextResponse.json({ error: "Workout not found" }, { status: 404 });
   }
 }

@@ -62,3 +62,6 @@ For the assignment, keep at least 8 meaningful commits, for example:
 - `build my plan page`
 - `add sorting and toast actions`
 - `finish responsive styling and README`
+
+### API availability fallback
+The app first requests the provided FitLog API through a Next.js server proxy. If the external API is temporarily unavailable, the project uses a local 12-workout fallback dataset so the deployed site remains usable and workout detail routes still work.
