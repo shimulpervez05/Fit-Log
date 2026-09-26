@@ -1,8 +1,17 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 570">
-<defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ff9fb4"/><stop offset="1" stop-color="#ff4d6d"/></linearGradient><filter id="s"><feDropShadow dx="0" dy="10" stdDeviation="10" flood-opacity=".18"/></filter></defs>
-<rect width="760" height="570" fill="url(#g)"/><circle cx="80" cy="80" r="90" fill="#fff" opacity=".16"/><circle cx="690" cy="500" r="150" fill="#fff" opacity=".12"/>
-<rect x="55" y="55" width="650" height="460" rx="34" fill="#ffffff" opacity=".25"/><rect x="55" y="55" width="650" height="460" rx="34" fill="none" stroke="#fff" stroke-width="3" opacity=".65"/>
-<g filter="url(#s)" transform="translate(0 10)"><circle cx="370" cy="145" r="38" fill="#f2b28b"/><path d="M335 190 Q400 175 445 225 L420 330 L335 330 Z" fill="#2b2b38"/><path d="M355 225 L300 330 L260 385 M420 225 L470 330 L515 385" stroke="#f2b28b" stroke-width="26" stroke-linecap="round"/><path d="M220 390 L570 390" stroke="#222" stroke-width="14"/><circle cx="220" cy="390" r="38" fill="#222"/><circle cx="570" cy="390" r="38" fill="#222"/><path d="M345 320 L325 465 M420 320 L455 465" stroke="#333" stroke-width="30" stroke-linecap="round"/><path d="M295 465 L350 465 M430 465 L485 465" stroke="#222" stroke-width="20" stroke-linecap="round"/></g>
-<rect x="75" y="425" width="250" height="58" rx="18" fill="#111" opacity=".78"/><text x="98" y="462" font-family="Arial, sans-serif" font-size="22" font-weight="800" fill="#fff">DEADLIFT</text>
-<circle cx="665" cy="455" r="34" fill="#111" opacity=".82"/><path d="M652 455h26M665 442v26" stroke="#ccff00" stroke-width="5" stroke-linecap="round"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" role="img" aria-label="DEADLIFT 3D animated illustration">
+<defs>
+ <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#ff9b6b"/><stop offset="1" stop-color="#ffd28e"/></linearGradient>
+ <linearGradient id="shirt" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#ff315f"/><stop offset="1" stop-color="#ff8a4c"/></linearGradient>
+ <radialGradient id="skin" cx="35%" cy="25%"><stop stop-color="#ffd4b5"/><stop offset="1" stop-color="#e99a73"/></radialGradient>
+ <filter id="shadow" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="18" stdDeviation="16" flood-opacity=".25"/></filter>
+ <filter id="soft" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="12"/></filter>
+ <style>.float{animation:float 3.4s ease-in-out infinite} @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}</style>
+</defs>
+<rect width="800" height="600" rx="38" fill="url(#bg)"/>
+<circle cx="115" cy="100" r="82" fill="#fff" opacity=".18"/><circle cx="690" cy="470" r="120" fill="#fff" opacity=".12"/>
+<path d="M0 500 Q220 430 420 510 T800 480 V600 H0Z" fill="#0f1720" opacity=".12"/>
+<g filter="url(#shadow)"><g class="float"><ellipse cx="400" cy="515" rx="220" ry="28" fill="#000" opacity=".22"/><circle cx="445" cy="190" r="46" fill="url(#skin)"/><path d="M405 235 Q455 215 490 255 L465 350 Q405 365 355 330Z" fill="url(#shirt)"/><path d="M410 260 L330 340" stroke="#f2b18b" stroke-width="28" stroke-linecap="round"/><path d="M485 275 L540 350" stroke="#f2b18b" stroke-width="28" stroke-linecap="round"/><path d="M370 330 L300 445" stroke="#303744" stroke-width="40" stroke-linecap="round"/><path d="M460 340 L530 445" stroke="#303744" stroke-width="40" stroke-linecap="round"/><path d="M245 455 H555" stroke="#252b35" stroke-width="16"/><circle cx="235" cy="455" r="48" fill="#202733"/><circle cx="565" cy="455" r="48" fill="#202733"/><path d="M210 425 H260 M540 425 H590" stroke="#a4adbc" stroke-width="10"/></g></g>
+<rect x="32" y="32" width="736" height="536" rx="30" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="3"/>
+<rect x="52" y="488" width="220" height="54" rx="18" fill="#11161d" opacity=".92"/>
+<text x="76" y="523" fill="#fff" font-family="Arial, sans-serif" font-size="20" font-weight="900" letter-spacing="1">DEADLIFT</text>
 </svg>
