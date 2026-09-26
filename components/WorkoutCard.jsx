@@ -22,7 +22,8 @@ const FALLBACK_IMAGE = "/images/workouts/bench.svg";
 
 export default function WorkoutCard({ workout }) {
   const id = String(workout?.id ?? workout?._id ?? "");
-  const image = LOCAL_WORKOUT_IMAGES[id] || workout?.image || workout?.imageUrl || FALLBACK_IMAGE;
+  // Use the API image first so card visuals match the newer project ZIP; local assets are fallback only.
+  const image = workout?.image || workout?.imageUrl || LOCAL_WORKOUT_IMAGES[id] || FALLBACK_IMAGE;
   const tags = workout?.muscleGroups ?? workout?.categories ?? workout?.category ?? [];
   const categories = Array.isArray(tags) ? tags : [tags].filter(Boolean);
   const duration = workout?.duration ?? workout?.durationMinutes ?? 0;
