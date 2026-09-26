@@ -1,25 +1,20 @@
 import { notFound } from "next/navigation";
 import Navbar from "@/components/Navbar";
 import WorkoutDetails from "@/components/WorkoutDetails";
-
-const API_URL = "https://api.abcz.workers.dev/api/fitlog";
+import { getWorkoutById } from "@/lib/api";
 
 export const dynamic = "force-dynamic";
+export const revalidate = 0;
 
 export default async function WorkoutPage({ params }) {
   const { id } = await params;
 
+  if (!id) {
+    notFound();
+  }
+
   try {
-    const response = await fetch(`${API_URL}/${id}`, {
-      cache: "no-store",
-    });
-
-    if (!response.ok) {
-      notFound();
-    }
-
-    const data = await response.json();
-
+    const data = await getWorkoutById(id);
     const workout = data?.data || data?.workout || data;
 
     if (!workout || typeof workout !== "object") {
