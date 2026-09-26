@@ -1,17 +1,8 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" role="img" aria-label="PLANK 3D animated illustration">
-<defs>
- <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#70d7e8"/><stop offset="1" stop-color="#74a7ff"/></linearGradient>
- <linearGradient id="shirt" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#ff315f"/><stop offset="1" stop-color="#ff8a4c"/></linearGradient>
- <radialGradient id="skin" cx="35%" cy="25%"><stop stop-color="#ffd4b5"/><stop offset="1" stop-color="#e99a73"/></radialGradient>
- <filter id="shadow" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="18" stdDeviation="16" flood-opacity=".25"/></filter>
- <filter id="soft" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="12"/></filter>
- <style>.float{animation:float 3.4s ease-in-out infinite} @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}</style>
-</defs>
-<rect width="800" height="600" rx="38" fill="url(#bg)"/>
-<circle cx="115" cy="100" r="82" fill="#fff" opacity=".18"/><circle cx="690" cy="470" r="120" fill="#fff" opacity=".12"/>
-<path d="M0 500 Q220 430 420 510 T800 480 V600 H0Z" fill="#0f1720" opacity=".12"/>
-<g filter="url(#shadow)"><g class="float"><ellipse cx="400" cy="500" rx="230" ry="24" fill="#000" opacity=".2"/><circle cx="535" cy="270" r="44" fill="url(#skin)"/><path d="M495 305 Q540 285 580 320 L540 365 Q500 350 470 330Z" fill="url(#shirt)"/><path d="M485 320 L410 375 L330 410" stroke="#303744" stroke-width="42" stroke-linecap="round"/><path d="M330 410 L250 485" stroke="#303744" stroke-width="38" stroke-linecap="round"/><path d="M535 360 L570 445" stroke="#f2b18b" stroke-width="26" stroke-linecap="round"/><path d="M570 445 L625 445" stroke="#f2b18b" stroke-width="26" stroke-linecap="round"/><path d="M235 485 H310" stroke="#202733" stroke-width="24" stroke-linecap="round"/><path d="M180 500 H640" stroke="#252b35" stroke-width="10" opacity=".35"/></g></g>
-<rect x="32" y="32" width="736" height="536" rx="30" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="3"/>
-<rect x="52" y="488" width="220" height="54" rx="18" fill="#11161d" opacity=".92"/>
-<text x="76" y="523" fill="#fff" font-family="Arial, sans-serif" font-size="20" font-weight="900" letter-spacing="1">PLANK</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 570">
+<defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffb6b6"/><stop offset="1" stop-color="#e94f64"/></linearGradient><filter id="s"><feDropShadow dx="0" dy="10" stdDeviation="10" flood-opacity=".18"/></filter></defs>
+<rect width="760" height="570" fill="url(#g)"/><circle cx="80" cy="80" r="90" fill="#fff" opacity=".16"/><circle cx="690" cy="500" r="150" fill="#fff" opacity=".12"/>
+<rect x="55" y="55" width="650" height="460" rx="34" fill="#ffffff" opacity=".25"/><rect x="55" y="55" width="650" height="460" rx="34" fill="none" stroke="#fff" stroke-width="3" opacity=".65"/>
+<g filter="url(#s)" transform="translate(0 10)"><circle cx="410" cy="190" r="38" fill="#f2b28b"/><path d="M370 230 Q410 215 455 235 L475 325 L350 325 Z" fill="#e94f64"/><path d="M365 255 L280 350 M455 255 L540 350" stroke="#f2b28b" stroke-width="25" stroke-linecap="round"/><path d="M350 325 L300 420 M475 325 L525 420" stroke="#333" stroke-width="30" stroke-linecap="round"/><path d="M275 430 L350 430 M475 430 L550 430" stroke="#222" stroke-width="20" stroke-linecap="round"/></g>
+<rect x="75" y="425" width="250" height="58" rx="18" fill="#111" opacity=".78"/><text x="98" y="462" font-family="Arial, sans-serif" font-size="22" font-weight="800" fill="#fff">PLANK</text>
+<circle cx="665" cy="455" r="34" fill="#111" opacity=".82"/><path d="M652 455h26M665 442v26" stroke="#ccff00" stroke-width="5" stroke-linecap="round"/>
 </svg>

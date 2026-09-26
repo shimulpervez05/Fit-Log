@@ -8,14 +8,14 @@ const LOCAL_WORKOUT_IMAGES = {
   "2": "/images/workouts/squat.svg",
   "3": "/images/workouts/deadlift.svg",
   "4": "/images/workouts/pullup.svg",
-  "5": "/images/workouts/press.svg",
+  "5": "/images/workouts/reference-overhead.webp",
   "6": "/images/workouts/row.svg",
   "7": "/images/workouts/rdl.svg",
   "8": "/images/workouts/lunge.svg",
-  "9": "/images/workouts/curl.svg",
+  "9": "/images/workouts/reference-curl.webp",
   "10": "/images/workouts/pushdown.svg",
   "11": "/images/workouts/lateral.svg",
-  "12": "/images/workouts/plank.svg",
+  "12": "/images/workouts/reference-plank.webp",
 };
 
 const FALLBACK_IMAGE = "/images/workouts/bench.svg";
